@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>佐原・水鄉之旅</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:           #F5F1EB;
+  --surface:      #FDFCFA;
+  --border:       #E2D9CE;
+  --text:         #231E18;
+  --text2:        #7B7066;
+  --text3:        #A89F95;
+  --accent:       #9B6B4E;
+  --accent-light: #F0E8DF;
+  --accent-dim:   rgba(155,107,78,0.12);
+  --timeline:     #D4C8BC;
+  --current:      #B5604A;
+  --shadow:       rgba(35,30,24,0.08);
+  --radius:       14px;
+}
+
+html { font-size: 18px; -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans TC', -apple-system, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding-bottom: 120px;
+}
+
+/* ── HEADER ───────────────────────────────────────── */
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 36px 20px 22px;
+  text-align: center;
+}
+
+.header-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.header-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.85rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.header-subtitle {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--text2);
+  letter-spacing: 0.08em;
+}
+
+.header-dates {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.header-date-badge {
+  font-size: 0.74rem;
+  color: var(--accent);
+  background: var(--accent-light);
+  border-radius: 20px;
+  padding: 4px 14px;
+  letter-spacing: 0.04em;
+}
+
+/* ── TABS ─────────────────────────────────────────── */
+.tabs-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.tabs {
+  display: flex;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.tab {
+  flex: 1;
+  padding: 13px 8px 11px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+  font-family: 'Noto Sans TC', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  color: var(--text3);
+}
+
+.tab-label {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.tab-date {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 300;
+  margin-top: 1px;
+  opacity: 0.85;
+}
+
+.tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ── PANELS ───────────────────────────────────────── */
+.day-panel {
+  display: none;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 28px 16px;
+}
+
+.day-panel.active { display: block; }
+
+/* ── TIMELINE ─────────────────────────────────────── */
+.timeline { position: relative; }
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 54px;
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+  background: var(--timeline);
+}
+
+.timeline-item {
+  display: flex;
+  gap: 0;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+/* time column */
+.item-time {
+  width: 54px;
+  flex-shrink: 0;
+  padding-top: 16px;
+  padding-right: 14px;
+  text-align: right;
+  font-size: 0.76rem;
+  color: var(--text3);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+
+/* dot */
+.item-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--timeline);
+  flex-shrink: 0;
+  margin-top: 19px;
+  margin-right: 14px;
+  position: relative;
+  z-index: 1;
+  transition: background 0.3s;
+}
+
+.timeline-item.is-current .item-dot {
+  background: var(--current);
+  width: 10px;
+  height: 10px;
+  margin-top: 18px;
+  margin-left: -1px;
+  box-shadow: 0 0 0 4px var(--accent-dim);
+}
+
+/* is-past: 保持清晰，不淡化 */
+
+/* card */
+.item-card {
+  flex: 1;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 14px 16px;
+  min-width: 0;
+  transition: opacity 0.2s;
+}
+
+.timeline-item.is-current .item-card {
+  border-color: var(--accent);
+  box-shadow: 0 2px 16px var(--shadow);
+}
+
+/* is-past: 保持清晰，不淡化 */
+
+.item-type-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.item-icon { font-size: 1rem; line-height: 1; }
+
+.item-type-label {
+  font-size: 0.68rem;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.item-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 2px;
+}
+
+.item-subtitle {
+  font-size: 0.8rem;
+  color: var(--text2);
+  margin-bottom: 6px;
+  font-weight: 300;
+}
+
+.item-notes {
+  font-size: 0.78rem;
+  color: var(--text2);
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 8px 11px;
+  margin-top: 8px;
+  line-height: 1.55;
+  border-left: 2px solid var(--border);
+}
+
+.item-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* ── BUTTONS ──────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 9px 16px;
+  border-radius: 22px;
+  font-size: 0.8rem;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 400;
+  text-decoration: none;
+  border: 1px solid;
+  min-height: 40px;
+  transition: opacity 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn:active { opacity: 0.7; }
+
+.btn-map {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: transparent;
+}
+
+.btn-train {
+  color: var(--surface);
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+/* ── NOW MARKER ───────────────────────────────────── */
+.now-marker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 68px;
+  margin: 6px 0;
+}
+
+.now-line {
+  height: 1px;
+  flex: 1;
+  background: var(--current);
+  opacity: 0.4;
+}
+
+.now-label {
+  font-size: 0.7rem;
+  color: var(--current);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+/* ── HOTEL FAB ────────────────────────────────────── */
+.hotel-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 18px;
+  z-index: 200;
+}
+
+.hotel-fab-btn {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(155,107,78,0.38);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s;
+  font-size: 1.5rem;
+}
+
+.hotel-fab-btn:active { transform: scale(0.93); }
+
+/* ── HOTEL SHEET ──────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(35,30,24,0.32);
+  z-index: 250;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s;
+}
+
+.overlay.open { opacity: 1; pointer-events: all; }
+
+.hotel-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  background: var(--surface);
+  border-radius: 22px 22px 0 0;
+  border-top: 1px solid var(--border);
+  padding: 0 22px 44px;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 -6px 28px var(--shadow);
+}
+
+.hotel-sheet.open { transform: translateY(0); }
+
+.sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 13px auto 22px;
+}
+
+.sheet-eyebrow {
+  font-size: 0.68rem;
+  color: var(--text3);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.hotel-name {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+
+.hotel-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+  font-size: 0.86rem;
+}
+
+.hotel-row-label {
+  color: var(--text3);
+  min-width: 66px;
+  flex-shrink: 0;
+  font-size: 0.76rem;
+  padding-top: 2px;
+}
+
+.hotel-row-val {
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.hotel-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.hotel-actions .btn {
+  flex: 1;
+  justify-content: center;
+}
+
+/* ── MULTI-LEG TRANSPORT ──────────────────────────── */
+.legs { display: flex; flex-direction: column; gap: 0; margin-top: 12px; }
+
+.leg {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  border-left-width: 4px;
+  border-left-style: solid;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.leg + .leg { margin-top: 8px; }
+
+/* 線路名稱列 */
+.leg-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.leg-line-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* 方向 + 時間主體 */
+.leg-body { padding: 10px 12px 10px; }
+
+.leg-direction {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.leg-depart {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.leg-depart-time {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.leg-depart-label {
+  font-size: 0.84rem;
+  color: var(--text2);
+}
+
+/* 站名展開列 */
+.leg-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px 8px;
+  border-top: 1px dashed var(--border);
+}
+
+.leg-count { font-size: 0.76rem; color: var(--text3); }
+
+.leg-toggle {
+  font-size: 0.76rem;
+  color: var(--accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  -webkit-tap-highlight-color: transparent;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+.leg-station-list {
+  display: none;
+  margin: 0;
+  padding: 4px 12px 10px 28px;
+  list-style: none;
+  border-top: 1px dashed var(--border);
+}
+
+.leg-station-list.open { display: block; }
+
+.leg-station-list li {
+  font-size: 0.78rem;
+  color: var(--text2);
+  padding: 4px 0;
+  border-bottom: 1px dashed rgba(0,0,0,0.04);
+  position: relative;
+}
+
+.leg-station-list li::before {
+  content: '|';
+  position: absolute;
+  left: -14px;
+  color: var(--border);
+  font-size: 0.7rem;
+}
+
+.leg-station-list li:last-child { border-bottom: none; font-weight: 500; color: var(--text); }
+.leg-station-list li:last-child::before { content: '▼'; font-size: 0.55rem; color: var(--text3); }
+
+/* 抵達列（末段顯示） */
+.leg-arrive {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 8px 12px;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+}
+
+.leg-arrive-time {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.leg-arrive-label { font-size: 0.82rem; color: var(--text2); }
+
+/* 轉乘提示列 */
+.leg-transfer-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  color: var(--accent);
+  background: var(--accent-light);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin: 6px 0;
+}
+
+.leg-transfer-time {
+  margin-left: auto;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── SUB-SPOTS ────────────────────────────────────── */
+.sub-spots {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sub-spot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--bg);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.sub-spot-icon { font-size: 1rem; flex-shrink: 0; }
+
+.sub-spot-info { flex: 1; min-width: 0; }
+
+.sub-spot-name {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.sub-spot-note {
+  font-size: 0.72rem;
+  color: var(--text3);
+  line-height: 1.3;
+  margin-top: 2px;
+}
+
+.sub-spot-map {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  text-decoration: none;
+  min-height: 32px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── OPTIONS (A/B CHOICE) ─────────────────────────── */
+.options-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  background: var(--bg);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.option-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--surface);
+  background: var(--accent);
+  padding: 2px 8px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.option-name {
+  flex: 1;
+  font-size: 0.82rem;
+  color: var(--text);
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.option-map {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  text-decoration: none;
+  min-height: 32px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── SCROLLBAR ────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-eyebrow">Japan · 2026</div>
+  <h1 class="header-title">佐原・水鄉之旅</h1>
+  <p class="header-subtitle">千葉縣・小江戶</p>
+  <div class="header-dates">
+    <span class="header-date-badge">Day 1 · 6月11日</span>
+    <span class="header-date-badge">Day 2 · 6月12日</span>
+  </div>
+</header>
+
+<div class="tabs-wrapper">
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(0)">
+      <span class="tab-label">Day 1</span>
+      <span class="tab-date">6月11日</span>
+    </button>
+    <button class="tab" onclick="switchTab(1)">
+      <span class="tab-label">Day 2</span>
+      <span class="tab-date">6月12日</span>
+    </button>
+  </div>
+</div>
+
+<div id="day-0" class="day-panel active"></div>
+<div id="day-1" class="day-panel"></div>
+
+<div class="hotel-fab">
+  <button class="hotel-fab-btn" onclick="toggleHotel()" aria-label="住宿資訊">🏨</button>
+</div>
+
+<div class="overlay" id="overlay" onclick="toggleHotel()"></div>
+<div class="hotel-sheet" id="hotel-sheet">
+  <div class="sheet-handle"></div>
+  <div id="hotel-content"></div>
+</div>
+
+<script>
+// ================================================================
+// ✏️  行程資料 ── 只需修改這個區塊，其餘請勿更動
+// ================================================================
+const TRIP = {
+
+  hotel: {
+    name: "NIPPONIA 佐原 商家町 Hotel",
+    address: "千葉県香取市佐原イ3981",
+    phone: "+81-478-55-7025",
+    checkIn: "15:00",
+    checkOut: "11:00",
+    confirmation: "請填入訂單編號",
+    mapsQuery: "NIPPONIA 佐原 商家町ホテル",
+  },
+
+  days: [
+    // ── Day 1 ───────────────────────────────────────────────
+    {
+      label: "Day 1",
+      date: "6月11日",
+      items: [
+
+        // 交通移動
+        {
+          time: "08:37",
+          type: "transport",
+          transport: "train",
+          title: "津田沼 → 佐原",
+          subtitle: "総武快速線 + 成田線（含 1 次轉乘）",
+          legs: [
+            {
+              line: "総武快速線",
+              lineColor: "#1D438A",
+              direction: "往成田空港方向",
+              from: "津田沼",
+              to: "成田",
+              departureTime: "08:37",
+              stations: [
+                "千葉",
+                "四街道",
+                "物井",
+                "佐倉",
+                "南酒々井",
+                "榎本",
+                "成田（轉乘）",
+              ],
+            },
+            {
+              line: "成田線",
+              lineColor: "#12C2A2",
+              direction: "往銚子・佐原方向",
+              from: "成田",
+              to: "佐原",
+              transfer: true,
+              transferStation: "成田站",
+              transferArrivalTime: "09:25",
+              departureTime: "09:40",
+              arrivalTime: "10:10",
+              stations: [
+                "久住",
+                "滑河",
+                "下総神崎",
+                "大戸",
+                "佐原（終點）",
+              ],
+            },
+          ],
+        },
+
+        // 寄放行李
+        {
+          time: "10:10",
+          type: "luggage",
+          title: "寄放行李",
+          subtitle: "水鄉佐原觀光案內所（出站左手邊）",
+          mapsQuery: "https://maps.app.goo.gl/C4ac55RoYggtdUbv9",
+          notes: "行李寄放後輕鬆散步，出發前再取回",
+        },
+
+        // 老街漫遊
+        {
+          time: "10:30",
+          type: "attraction",
+          title: "小野川老街漫遊",
+          subtitle: "沿黑瓦木造老街慢慢散步，約 2 小時",
+          mapsQuery: "https://maps.app.goo.gl/jnns23ADB7Pm6MJ39",
+          notes: "出觀光案內所後，直走縣道 16 號約 500 公尺（6-7 分鐘）至開運橋，右轉順著河流往下走即是精華老街起點",
+          subSpots: [
+            {
+              icon: "🌉",
+              name: "開運橋（老街起點）",
+              mapsUrl: "https://maps.app.goo.gl/jnns23ADB7Pm6MJ39",
+            },
+            {
+              icon: "💧",
+              name: "樋橋（賈拉賈拉橋）",
+              mapsUrl: "https://maps.app.goo.gl/W7krm8TSnhnXknw27",
+              note: "每 30 分鐘流水傾瀉成瀑布，聲音很療癒",
+            },
+            {
+              icon: "🗺️",
+              name: "伊能忠敬舊宅",
+              mapsUrl: "https://maps.app.goo.gl/2gpP3ugf3CsvFtmu6",
+              note: "日本第一地圖師故居，國家指定古蹟",
+            },
+            {
+              icon: "🫙",
+              name: "正上・醬油老店",
+              mapsUrl: "https://maps.app.goo.gl/byybpgFdSConbZqh6",
+              note: "創業 1800 年，土藏造建築",
+            },
+          ],
+        },
+
+        // 午餐（二選一）
+        {
+          time: "12:30",
+          type: "food",
+          title: "下町百年老店午餐",
+          subtitle: "二選一（晚餐飯店有法式，中午清淡一點就好）",
+          notes: "鰻魚飯或蕎麥麵，兩家都是百年老店",
+          options: [
+            {
+              label: "選 A",
+              name: "山田うなぎ店・鰻魚飯",
+              mapsUrl: "https://maps.app.goo.gl/GTB3VradorEk76UX7",
+            },
+            {
+              label: "選 B",
+              name: "小堀屋本店・蕎麥麵",
+              mapsUrl: "https://maps.app.goo.gl/TdWnagM6GpCT7F1W8",
+            },
+          ],
+        },
+
+        // 觀光船
+        {
+          time: "14:00",
+          type: "attraction",
+          title: "傳統手搖町船體驗",
+          subtitle: "小江戶佐原觀光船・船程約 30 分鐘",
+          mapsQuery: "https://maps.app.goo.gl/W7krm8TSnhnXknw27",
+          notes: "成人 1,300 円｜10:00–16:00 隨到隨開，約每 30 分鐘一班\n船上有遮陽棚，船伕划槳，低視角欣賞柳樹與江戶建築",
+        },
+
+        // 酒造 & 霜淇淋
+        {
+          time: "15:00",
+          type: "shopping",
+          title: "酒造巡禮 & 醬油霜淇淋",
+          subtitle: "老街特色體驗",
+          subSpots: [
+            {
+              icon: "🍶",
+              name: "馬場本店酒造",
+              mapsUrl: "https://maps.app.goo.gl/YJrzNrhchaE4wZXY8",
+              note: "300 年酒廠，可免費參觀古釀酒器具",
+            },
+            {
+              icon: "🍦",
+              name: "醬油霜淇淋（正上周邊）",
+              mapsUrl: "https://maps.app.goo.gl/byybpgFdSConbZqh6",
+              note: "焦糖太妃糖味帶淡淡鹹香，超消暑！",
+            },
+          ],
+        },
+
+        // 取行李 + Check-in
+        {
+          time: "16:00",
+          type: "hotel",
+          title: "領取行李 ＆ 飯店 Check-in",
+          subSpots: [
+            {
+              icon: "🧳",
+              name: "取回行李（觀光案內所）",
+              mapsUrl: "https://maps.app.goo.gl/C4ac55RoYggtdUbv9",
+            },
+            {
+              icon: "🏨",
+              name: "飯店 Check-in",
+              mapsUrl: "https://maps.app.goo.gl/rYRVDYtSEVyxL5pq7",
+            },
+          ],
+        },
+
+        // 晚餐
+        {
+          time: "18:00",
+          type: "food",
+          title: "晚餐",
+          subtitle: "飯店提供法式料理",
+          mapsQuery: "https://maps.app.goo.gl/rYRVDYtSEVyxL5pq7",
+          notes: "由飯店提供，輕鬆享用",
+        },
+
+      ],
+    },
+
+    // ── Day 2 ───────────────────────────────────────────────
+    {
+      label: "Day 2",
+      date: "6月12日",
+      items: [
+        {
+          time: "08:00",
+          type: "food",
+          title: "早餐",
+          subtitle: "飯店早餐",
+          mapsQuery: "NIPPONIA 佐原 商家町ホテル",
+          notes: "",
+        },
+        {
+          time: "09:30",
+          type: "attraction",
+          title: "小野川遊船",
+          subtitle: "傳統木船水上遊覽，約 30 分鐘",
+          mapsQuery: "さわら舟めぐり 乗り場",
+          notes: "費用約 1,000 円，可以從水上角度欣賞老街。建議事先確認是否需要預約",
+        },
+        {
+          time: "11:00",
+          type: "shopping",
+          title: "老街購物・伴手禮",
+          subtitle: "醬油、味噌、傳統工藝品",
+          mapsQuery: "佐原 お土産",
+          notes: "推薦：正上醬油（老舗）、麻地物産店。醬油是佐原最著名的在地特產",
+        },
+        {
+          time: "12:30",
+          type: "food",
+          title: "午餐・手打蕎麥麵",
+          subtitle: "老街蕎麥麵老店",
+          mapsQuery: "手打ち蕎麦 佐原",
+          notes: "",
+        },
+        {
+          time: "14:00",
+          type: "attraction",
+          title: "水郷佐原 水生植物園",
+          subtitle: "菖蒲與睡蓮（6月為盛開旺季）",
+          mapsQuery: "水郷佐原水生植物園",
+          notes: "6月正值菖蒲祭！入園費 800 円，園內超過 400 種花菖蒲，非常值得一看",
+        },
+        {
+          time: "15:30",
+          type: "transport",
+          transport: "walk",
+          title: "步行返回佐原駅",
+          subtitle: "Check-out 完成，準備返程",
+          mapsQuery: "佐原駅",
+          notes: "Check-out 時間為 11:00，行李可在大廳寄存至出發前",
+        },
+        {
+          time: "16:42",
+          type: "transport",
+          transport: "train",
+          title: "佐原駅 搭車返回",
+          subtitle: "JR 特急しおさい10號 → 上野",
+          mapsQuery: "佐原駅",
+          scheduleUrl: "https://transit.yahoo.co.jp/search/result?from=%E4%BD%90%E5%8E%9F&to=%E4%B8%8A%E9%87%8E&y=2026&m=06&d=11&hh=16&m1=4&m2=2&type=1",
+          notes: "約 1 小時 20 分，車上可以稍作休息",
+        },
+        {
+          time: "18:00",
+          type: "transport",
+          transport: "train",
+          title: "抵達上野駅・平安返家",
+          mapsQuery: "上野駅",
+          notes: "旅程圓滿結束",
+        },
+      ],
+    },
+  ],
+};
+// ================================================================
+// 以下為渲染邏輯，請勿修改
+// ================================================================
+
+const ICONS = {
+  transport: { train: "🚃", shinkansen: "🚄", walk: "🚶", taxi: "🚕", bus: "🚌", boat: "🛥️" },
+  food:      "🍽️",
+  attraction:"⛩️",
+  cafe:      "☕",
+  shopping:  "🛍️",
+  hotel:     "🏨",
+  luggage:   "🧳",
+};
+
+const LABELS = {
+  transport: "交通",
+  food:      "餐廳",
+  attraction:"景點",
+  cafe:      "咖啡",
+  shopping:  "購物",
+  hotel:     "飯店",
+  luggage:   "行李",
+};
+
+function getIcon(item) {
+  if (item.type === "transport") return ICONS.transport[item.transport] || "🚃";
+  return ICONS[item.type] || "📍";
+}
+
+// 支援直接 URL（短網址）或關鍵字查詢
+function mapsUrl(q) {
+  if (!q) return "#";
+  if (q.startsWith("http")) return q;
+  return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
+}
+
+let _legCounter = 0;
+function renderLegs(legs) {
+  return '<div class="legs">' + legs.map((leg) => {
+    const id    = "leg-" + (++_legCounter);
+    const count = leg.stations.length;
+
+    // 轉乘標籤（含抵達時間）
+    const transferLabel = leg.transfer ? `
+      <div class="leg-transfer-label">
+        🔄 轉乘・${leg.transferStation || leg.from}
+        ${leg.transferArrivalTime
+          ? `<span class="leg-transfer-time">${leg.transferArrivalTime} 抵達</span>`
+          : ""}
+      </div>` : "";
+
+    // 方向文字
+    const dirHtml = leg.direction
+      ? `<div class="leg-direction">${leg.direction}</div>` : "";
+
+    // 發車時間
+    const departHtml = leg.departureTime ? `
+      <div class="leg-depart">
+        <span class="leg-depart-time">${leg.departureTime}</span>
+        <span class="leg-depart-label">發車</span>
+      </div>` : "";
+
+    // 抵達時間（末段才顯示）
+    const arriveHtml = leg.arrivalTime ? `
+      <div class="leg-arrive">
+        <span class="leg-arrive-time">${leg.arrivalTime}</span>
+        <span class="leg-arrive-label">抵達 ${leg.to}</span>
+      </div>` : "";
+
+    return `
+      ${transferLabel}
+      <div class="leg" style="border-left-color:${leg.lineColor}">
+        <div class="leg-header">
+          <span class="leg-line-badge" style="background:${leg.lineColor}">${leg.line}</span>
+        </div>
+        <div class="leg-body">
+          ${dirHtml}
+          ${departHtml}
+        </div>
+        <div class="leg-footer">
+          <span class="leg-count">共 ${count} 站</span>
+          <button class="leg-toggle" onclick="toggleLeg('${id}',this)">展開站名 ▾</button>
+        </div>
+        <ul class="leg-station-list" id="${id}">
+          ${leg.stations.map(s => `<li>${s}</li>`).join("")}
+        </ul>
+        ${arriveHtml}
+      </div>`;
+  }).join("") + "</div>";
+}
+
+function toggleLeg(id, btn) {
+  const open = document.getElementById(id).classList.toggle("open");
+  btn.textContent = open ? "收起 ▴" : "展開站名 ▾";
+}
+
+function renderSubSpots(spots) {
+  return '<div class="sub-spots">' + spots.map(s => `
+    <div class="sub-spot">
+      <span class="sub-spot-icon">${s.icon || "📍"}</span>
+      <div class="sub-spot-info">
+        <div class="sub-spot-name">${s.name}</div>
+        ${s.note ? `<div class="sub-spot-note">${s.note}</div>` : ""}
+      </div>
+      ${s.mapsUrl ? `<a class="sub-spot-map" href="${s.mapsUrl}" target="_blank">地圖</a>` : ""}
+    </div>`).join("") + "</div>";
+}
+
+function renderOptions(opts) {
+  return '<div class="options-list">' + opts.map(o => `
+    <div class="option-item">
+      <span class="option-label">${o.label}</span>
+      <span class="option-name">${o.name}</span>
+      ${o.mapsUrl ? `<a class="option-map" href="${o.mapsUrl}" target="_blank">地圖</a>` : ""}
+    </div>`).join("") + "</div>";
+}
+
+function toMin(t) {
+  if (!t) return -1;
+  const [h, m] = t.split(":").map(Number);
+  return h * 60 + m;
+}
+
+function nowMin() {
+  const d = new Date();
+  return d.getHours() * 60 + d.getMinutes();
+}
+
+function pad(n) { return String(n).padStart(2, "0"); }
+
+function renderDay(dayIdx) {
+  const day  = TRIP.days[dayIdx];
+  const now  = nowMin();
+  const nowT = pad(new Date().getHours()) + ":" + pad(new Date().getMinutes());
+
+  // Find current item (last whose time <= now)
+  let curIdx = -1;
+  day.items.forEach((it, i) => { if (toMin(it.time) <= now) curIdx = i; });
+
+  let html = '<div class="timeline">';
+  let nowInserted = false;
+
+  day.items.forEach((item, i) => {
+    const isPast    = i < curIdx;
+    const isCurrent = i === curIdx;
+    const cls       = isPast ? "is-past" : isCurrent ? "is-current" : "";
+
+    // Insert "now" marker after current item
+    if (isCurrent && !nowInserted) {
+      nowInserted = true;
+    }
+
+    const subtitle   = item.subtitle   ? `<div class="item-subtitle">${item.subtitle}</div>` : "";
+    const notes      = item.notes      ? `<div class="item-notes">${item.notes}</div>` : "";
+    const legsHtml   = item.legs       ? renderLegs(item.legs)       : "";
+    const spotsHtml  = item.subSpots   ? renderSubSpots(item.subSpots) : "";
+    const optionsHtml= item.options    ? renderOptions(item.options)  : "";
+
+    let actions = "";
+    if (item.mapsQuery)   actions += `<a class="btn btn-map"   href="${mapsUrl(item.mapsQuery)}"  target="_blank">📍 地圖導航</a>`;
+    if (item.scheduleUrl) actions += `<a class="btn btn-train" href="${item.scheduleUrl}" target="_blank">🚃 查看路線</a>`;
+
+    html += `
+      <div class="timeline-item ${cls}">
+        <div class="item-time">${item.time}</div>
+        <div class="item-dot"></div>
+        <div class="item-card">
+          <div class="item-type-row">
+            <span class="item-icon">${getIcon(item)}</span>
+            <span class="item-type-label">${LABELS[item.type] || ""}</span>
+          </div>
+          <div class="item-title">${item.title}</div>
+          ${subtitle}${notes}${legsHtml}${spotsHtml}${optionsHtml}
+          ${actions ? `<div class="item-actions">${actions}</div>` : ""}
+        </div>
+      </div>`;
+
+    // Insert now marker between current and next
+    if (isCurrent && i < day.items.length - 1) {
+      html += `
+        <div class="now-marker">
+          <div class="now-line"></div>
+          <div class="now-label">現在 ${nowT}</div>
+          <div class="now-line"></div>
+        </div>`;
+    }
+  });
+
+  html += "</div>";
+  document.getElementById("day-" + dayIdx).innerHTML = html;
+}
+
+function renderHotel() {
+  const h = TRIP.hotel;
+  document.getElementById("hotel-content").innerHTML = `
+    <div class="sheet-eyebrow">今晚住宿</div>
+    <div class="hotel-name">${h.name}</div>
+    <div class="hotel-row">
+      <span class="hotel-row-label">地址</span>
+      <span class="hotel-row-val">${h.address}</span>
+    </div>
+    <div class="hotel-row">
+      <span class="hotel-row-label">電話</span>
+      <span class="hotel-row-val">${h.phone}</span>
+    </div>
+    <div class="hotel-row">
+      <span class="hotel-row-label">Check-in</span>
+      <span class="hotel-row-val">${h.checkIn}</span>
+    </div>
+    <div class="hotel-row">
+      <span class="hotel-row-label">Check-out</span>
+      <span class="hotel-row-val">${h.checkOut}</span>
+    </div>
+    <div class="hotel-row">
+      <span class="hotel-row-label">訂單</span>
+      <span class="hotel-row-val">${h.confirmation}</span>
+    </div>
+    <div class="hotel-actions">
+      <a class="btn btn-map"   href="${mapsUrl(h.mapsQuery)}" target="_blank">📍 地圖導航</a>
+      <a class="btn btn-train" href="tel:${h.phone}">📞 撥打電話</a>
+    </div>`;
+}
+
+function switchTab(i) {
+  document.querySelectorAll(".tab").forEach((t, j)       => t.classList.toggle("active", j === i));
+  document.querySelectorAll(".day-panel").forEach((p, j) => p.classList.toggle("active", j === i));
+}
+
+let sheetOpen = false;
+function toggleHotel() {
+  sheetOpen = !sheetOpen;
+  document.getElementById("hotel-sheet").classList.toggle("open", sheetOpen);
+  document.getElementById("overlay").classList.toggle("open", sheetOpen);
+}
+
+// Init
+TRIP.days.forEach((_, i) => renderDay(i));
+renderHotel();
+</script>
+</body>
+</html>
