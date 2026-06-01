@@ -601,6 +601,40 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* ── PHRASE CARD（出示字卡）─────────────────────── */
+.phrase-card {
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.phrase-card-header {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  padding: 6px 12px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.phrase-zh {
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: #7C3D15;
+  background: #FDF6EE;
+  border-bottom: 1px solid var(--border);
+}
+
+.phrase-ja {
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: #1A3A6E;
+  background: #EEF4FD;
+}
+
 /* ── SUB-SPOTS ────────────────────────────────────── */
 .sub-spots {
   margin-top: 10px;
@@ -700,6 +734,84 @@ body {
   text-decoration: none;
   min-height: 32px;
   -webkit-tap-highlight-color: transparent;
+}
+
+/* ── FLIGHT CARD ──────────────────────────────────── */
+.flight-card {
+  margin-top: 12px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1B3A6E 0%, #0E2245 100%);
+  padding: 16px 18px 20px;
+}
+
+.flight-card-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.flight-card-airline {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+}
+
+.flight-card-flightno {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.88);
+  letter-spacing: 0.06em;
+}
+
+.flight-card-route {
+  display: flex;
+  align-items: center;
+}
+
+.flight-card-endpoint { flex: 1; }
+.flight-card-endpoint.right { text-align: right; }
+
+.flight-card-city {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 3px;
+}
+
+.flight-card-code {
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 7px;
+  letter-spacing: -0.01em;
+}
+
+.flight-card-time {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.88);
+  font-variant-numeric: tabular-nums;
+}
+
+.flight-card-mid {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 0 14px;
+  margin-top: -10px;
+}
+
+.flight-card-plane { font-size: 1.1rem; }
+
+.flight-card-dash {
+  width: 42px;
+  height: 1px;
+  background: rgba(255,255,255,0.22);
 }
 
 /* ── SCROLLBAR ────────────────────────────────────── */
@@ -882,41 +994,49 @@ const TRIP = {
           ],
         },
 
-        // 觀光船
+        // 計程車（前往菖蒲公園）
         {
           time: "14:00",
-          type: "attraction",
-          title: "傳統手搖町船體驗",
-          subtitle: "小江戶佐原觀光船・船程約 30 分鐘",
-          mapsQuery: "https://maps.app.goo.gl/W7krm8TSnhnXknw27",
-          notes: "成人 1,300 円｜10:00–16:00 隨到隨開，約每 30 分鐘一班\n船上有遮陽棚，船伕划槳，低視角欣賞柳樹與江戶建築",
+          type: "transport",
+          transport: "taxi",
+          title: "計程車・前往菖蒲公園",
+          notes: "吃飽飯後可以請餐廳幫你叫車",
+          phraseCard: {
+            zh: "不好意思，可以請您幫我叫一台計程車嗎？目的地：到水鄉佐原菖蒲公園，拜託了。",
+            ja: "すみません、タクシーを1台呼んでいただけませんか？目的地：水郷佐原あやめパーク（菖蒲公園）までお願いします。",
+          },
         },
 
-        // 酒造 & 霜淇淋
+        // 菖蒲公園
         {
-          time: "15:00",
-          type: "shopping",
-          title: "酒造巡禮 & 醬油霜淇淋",
-          subtitle: "老街特色體驗",
-          subSpots: [
-            {
-              icon: "🍶",
-              name: "馬場本店酒造",
-              mapsUrl: "https://maps.app.goo.gl/YJrzNrhchaE4wZXY8",
-              note: "300 年酒廠，可免費參觀古釀酒器具",
-            },
-            {
-              icon: "🍦",
-              name: "醬油霜淇淋（正上周邊）",
-              mapsUrl: "https://maps.app.goo.gl/byybpgFdSConbZqh6",
-              note: "焦糖太妃糖味帶淡淡鹹香，超消暑！",
-            },
-          ],
+          time: "14:20",
+          type: "attraction",
+          title: "水鄉佐原菖蒲公園（菖蒲祭）",
+          subtitle: "6 月中旬百萬株紫白花海滿開",
+          mapsQuery: "水郷佐原あやめパーク",
+          notes: "散步看花＋體驗乘坐竹葉小舟，沿水路穿梭園內各處\n這裡是全日本絕無僅有、主打走「水路」賞花的菖蒲花園，一定要體驗搭小舟喔，這樣不用走路也輕鬆！\n\n乘船碼頭通常在大水池岸邊，標示「園内舟めぐり」（園內乘船遊覽）「乗り場」（乘船處），跟著指標就會找到。找不到的話，出示以下字卡：",
+          phraseCard: {
+            zh: "不好意思，請問園內乘船遊覽（手搖小舟）的乘船處在哪裡呢？",
+            ja: "すみません、園内舟めぐり（サッパ舟）の乗り場はどこですか？",
+          },
+        },
+
+        // 計程車（返回佐原站）
+        {
+          time: "16:00",
+          type: "transport",
+          transport: "taxi",
+          title: "計程車・返回佐原站",
+          notes: "請走到菖蒲公園的售票處／服務台，出示以下字卡給服務人員請他幫你叫車",
+          phraseCard: {
+            zh: "不好意思，可以幫我叫一台回程的計程車嗎？目的地：到佐原車站，拜託了。",
+            ja: "すみません、帰りのタクシーを1台呼んでいただけますか？目的地：佐原駅（さわらえき）までお願いします。",
+          },
         },
 
         // 取行李 + Check-in
         {
-          time: "16:00",
+          time: "16:30",
           type: "hotel",
           title: "領取行李 ＆ 飯店 Check-in",
           subSpots: [
@@ -951,73 +1071,118 @@ const TRIP = {
       label: "Day 2",
       date: "6月12日",
       items: [
+
+        // 早餐 + 退房
         {
-          time: "08:00",
+          time: "08:30",
           type: "food",
-          title: "早餐",
-          subtitle: "飯店早餐",
+          title: "早餐＋退房準備",
+          subtitle: "飯店早餐，享用完後整理行李辦理退房",
           mapsQuery: "NIPPONIA 佐原 商家町ホテル",
-          notes: "",
+          notes: "退房時間 11:00，可請飯店代為保管行李至出發前",
         },
+
+        // 酒造巡禮
         {
           time: "09:30",
           type: "attraction",
-          title: "小野川遊船",
-          subtitle: "傳統木船水上遊覽，約 30 分鐘",
-          mapsQuery: "さわら舟めぐり 乗り場",
-          notes: "費用約 1,000 円，可以從水上角度欣賞老街。建議事先確認是否需要預約",
+          title: "佐原酒造巡禮",
+          subtitle: "老街土藏造酒藏，徒步可達",
+          notes: "佐原自江戶時代起便是釀酒重鎮，黑瓦土藏保存完好，可入內參觀＋購買試飲",
+          subSpots: [
+            {
+              icon: "🍶",
+              name: "東薫酒造",
+              mapsUrl: "https://maps.app.goo.gl/2Ygq9aVvovxHBJLM9",
+              note: "創業 1804 年，代表銘柄「東薫」，可試飲",
+            },
+            {
+              icon: "🍶",
+              name: "馬場本店酒造",
+              mapsUrl: "https://maps.app.goo.gl/yiHnZf9T7tSSxLjT7",
+              note: "創業 1689 年，佐原現存最古老酒造，銘柄「大中将」",
+            },
+          ],
         },
+
+        // 步行至佐原站
         {
-          time: "11:00",
-          type: "shopping",
-          title: "老街購物・伴手禮",
-          subtitle: "醬油、味噌、傳統工藝品",
-          mapsQuery: "佐原 お土産",
-          notes: "推薦：正上醬油（老舗）、麻地物産店。醬油是佐原最著名的在地特產",
-        },
-        {
-          time: "12:30",
-          type: "food",
-          title: "午餐・手打蕎麥麵",
-          subtitle: "老街蕎麥麵老店",
-          mapsQuery: "手打ち蕎麦 佐原",
-          notes: "",
-        },
-        {
-          time: "14:00",
-          type: "attraction",
-          title: "水郷佐原 水生植物園",
-          subtitle: "菖蒲與睡蓮（6月為盛開旺季）",
-          mapsQuery: "水郷佐原水生植物園",
-          notes: "6月正值菖蒲祭！入園費 800 円，園內超過 400 種花菖蒲，非常值得一看",
-        },
-        {
-          time: "15:30",
+          time: "10:30",
           type: "transport",
           transport: "walk",
-          title: "步行返回佐原駅",
-          subtitle: "Check-out 完成，準備返程",
+          title: "步行至佐原駅",
+          subtitle: "老街沿河走回車站，約 15 分鐘",
           mapsQuery: "佐原駅",
-          notes: "Check-out 時間為 11:00，行李可在大廳寄存至出發前",
+          notes: "沿小野川河畔步行，風景依然很美，順道最後回眸老街",
         },
+
+        // 搭車前往機場
         {
-          time: "16:42",
+          time: "11:11",
           type: "transport",
           transport: "train",
-          title: "佐原駅 搭車返回",
-          subtitle: "JR 特急しおさい10號 → 上野",
-          mapsQuery: "佐原駅",
-          scheduleUrl: "https://transit.yahoo.co.jp/search/result?from=%E4%BD%90%E5%8E%9F&to=%E4%B8%8A%E9%87%8E&y=2026&m=06&d=11&hh=16&m1=4&m2=2&type=1",
-          notes: "約 1 小時 20 分，車上可以稍作休息",
+          title: "佐原 → 成田機場第2航廈",
+          subtitle: "成田線 + 成田線空港支線（含 1 次轉乘）",
+          legs: [
+            {
+              line: "成田線",
+              lineColor: "#12C2A2",
+              direction: "往成田・千葉方向",
+              from: "佐原",
+              to: "成田",
+              departureTime: "11:11",
+              stations: [
+                "大戸",
+                "下総神崎",
+                "滑河",
+                "久住",
+                "成田（換月台）",
+              ],
+            },
+            {
+              line: "成田線空港支線",
+              lineColor: "#12C2A2",
+              direction: "往成田空港方向 ✈️",
+              from: "成田",
+              to: "成田機場第2航廈",
+              transfer: true,
+              transferStation: "成田站",
+              transferArrivalTime: "11:41",
+              departureTime: "11:59",
+              arrivalTime: "12:10",
+              stations: [
+                "成田機場第2航廈（終點）",
+              ],
+            },
+          ],
         },
+
+        // 機場貴賓室
         {
-          time: "18:00",
-          type: "transport",
-          transport: "train",
-          title: "抵達上野駅・平安返家",
-          mapsQuery: "上野駅",
-          notes: "旅程圓滿結束",
+          time: "12:30",
+          type: "attraction",
+          title: "機場報到＋貴賓室",
+          subtitle: "成田機場第2航廈・中華航空櫃台",
+          mapsQuery: "成田空港第2旅客ターミナル",
+          notes: "建議起飛前 2 小時完成報到。若有貴賓卡可使用航廈內貴賓室，輕鬆等候登機",
         },
+
+        // 起飛
+        {
+          time: "14:30",
+          type: "transport",
+          transport: "plane",
+          title: "起飛・回台灣囉！",
+          flightCard: {
+            airline: "中華航空",
+            flightNo: "CI 101",
+            from: "成田  NRT",
+            to: "台北  TPE",
+            departs: "14:30",
+            arrives: "17:15",
+          },
+        },
+
       ],
     },
   ],
@@ -1027,7 +1192,7 @@ const TRIP = {
 // ================================================================
 
 const ICONS = {
-  transport: { train: "🚃", shinkansen: "🚄", walk: "🚶", taxi: "🚕", bus: "🚌", boat: "🛥️" },
+  transport: { train: "🚃", shinkansen: "🚄", walk: "🚶", taxi: "🚕", bus: "🚌", boat: "🛥️", plane: "✈️" },
   food:      "🍽️",
   attraction:"⛩️",
   cafe:      "☕",
@@ -1139,6 +1304,47 @@ function renderOptions(opts) {
     </div>`).join("") + "</div>";
 }
 
+function renderPhraseCard(card) {
+  return `
+    <div class="phrase-card">
+      <div class="phrase-card-header">📋 出示此字卡給對方看</div>
+      <div class="phrase-zh">${card.zh}</div>
+      <div class="phrase-ja">${card.ja}</div>
+    </div>`;
+}
+
+function renderFlightCard(card) {
+  const fromParts = card.from.split(/\s{2,}/);
+  const toParts   = card.to.split(/\s{2,}/);
+  const fromCity  = fromParts[0] || card.from;
+  const fromCode  = fromParts[1] || "";
+  const toCity    = toParts[0]   || card.to;
+  const toCode    = toParts[1]   || "";
+  return `
+    <div class="flight-card">
+      <div class="flight-card-meta">
+        <span class="flight-card-airline">${card.airline}</span>
+        <span class="flight-card-flightno">${card.flightNo}</span>
+      </div>
+      <div class="flight-card-route">
+        <div class="flight-card-endpoint">
+          <div class="flight-card-city">${fromCity}</div>
+          <div class="flight-card-code">${fromCode}</div>
+          <div class="flight-card-time">${card.departs}</div>
+        </div>
+        <div class="flight-card-mid">
+          <span class="flight-card-plane">✈️</span>
+          <div class="flight-card-dash"></div>
+        </div>
+        <div class="flight-card-endpoint right">
+          <div class="flight-card-city">${toCity}</div>
+          <div class="flight-card-code">${toCode}</div>
+          <div class="flight-card-time">${card.arrives}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
 function toMin(t) {
   if (!t) return -1;
   const [h, m] = t.split(":").map(Number);
@@ -1176,9 +1382,11 @@ function renderDay(dayIdx) {
 
     const subtitle   = item.subtitle   ? `<div class="item-subtitle">${item.subtitle}</div>` : "";
     const notes      = item.notes      ? `<div class="item-notes">${item.notes}</div>` : "";
-    const legsHtml   = item.legs       ? renderLegs(item.legs)       : "";
-    const spotsHtml  = item.subSpots   ? renderSubSpots(item.subSpots) : "";
-    const optionsHtml= item.options    ? renderOptions(item.options)  : "";
+    const legsHtml    = item.legs       ? renderLegs(item.legs)              : "";
+    const spotsHtml   = item.subSpots   ? renderSubSpots(item.subSpots)       : "";
+    const optionsHtml = item.options    ? renderOptions(item.options)         : "";
+    const phraseHtml  = item.phraseCard ? renderPhraseCard(item.phraseCard)   : "";
+    const flightHtml  = item.flightCard ? renderFlightCard(item.flightCard)   : "";
 
     let actions = "";
     if (item.mapsQuery)   actions += `<a class="btn btn-map"   href="${mapsUrl(item.mapsQuery)}"  target="_blank">📍 地圖導航</a>`;
@@ -1194,7 +1402,7 @@ function renderDay(dayIdx) {
             <span class="item-type-label">${LABELS[item.type] || ""}</span>
           </div>
           <div class="item-title">${item.title}</div>
-          ${subtitle}${notes}${legsHtml}${spotsHtml}${optionsHtml}
+          ${subtitle}${notes}${legsHtml}${spotsHtml}${optionsHtml}${phraseHtml}${flightHtml}
           ${actions ? `<div class="item-actions">${actions}</div>` : ""}
         </div>
       </div>`;
