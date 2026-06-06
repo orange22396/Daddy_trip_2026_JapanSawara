@@ -264,6 +264,7 @@ body {
   margin-top: 8px;
   line-height: 1.55;
   border-left: 2px solid var(--border);
+  white-space: pre-line;
 }
 
 .item-actions {
@@ -870,7 +871,7 @@ const TRIP = {
     phone: "+81-478-55-7025",
     checkIn: "15:00",
     checkOut: "11:00",
-    confirmation: "請填入訂單編號",
+    confirmation: "3611-1000-6316",
     mapsQuery: "NIPPONIA 佐原 商家町ホテル",
   },
 
@@ -1014,7 +1015,7 @@ const TRIP = {
           title: "水鄉佐原菖蒲公園（菖蒲祭）",
           subtitle: "6 月中旬百萬株紫白花海滿開",
           mapsQuery: "水郷佐原あやめパーク",
-          notes: "散步看花＋體驗乘坐竹葉小舟，沿水路穿梭園內各處\n這裡是全日本絕無僅有、主打走「水路」賞花的菖蒲花園，一定要體驗搭小舟喔，這樣不用走路也輕鬆！\n\n乘船碼頭通常在大水池岸邊，標示「園内舟めぐり」（園內乘船遊覽）「乗り場」（乘船處），跟著指標就會找到。找不到的話，出示以下字卡：",
+          notes: "體驗：散步看花＋體驗乘坐竹葉小舟，一定要體驗搭小舟喔，這樣不用走路也輕鬆！\n亮點：沿「水路」（小舟）賞花是全日本絕無僅有\n乘船指示：乘船碼頭通常在大水池岸邊，標示「園内舟めぐり」（園內乘船遊覽）「乗り場」（乘船處），跟著指標就會找到。\n找不到碼頭的話，可出示以下字卡：",
           phraseCard: {
             zh: "不好意思，請問園內乘船遊覽（手搖小舟）的乘船處在哪裡呢？",
             ja: "すみません、園内舟めぐり（サッパ舟）の乗り場はどこですか？",
@@ -1039,6 +1040,7 @@ const TRIP = {
           time: "16:30",
           type: "hotel",
           title: "領取行李 ＆ 飯店 Check-in",
+          notes: "訂單編號：3611-1000-6316\n訂位人：Pei Chin Wang（用你的名字訂的）\n房間內有遛狗相關的設施是正常的，因為這間是寵物友善的住宿 🐾",
           subSpots: [
             {
               icon: "🧳",
@@ -1092,17 +1094,28 @@ const TRIP = {
           subSpots: [
             {
               icon: "🍶",
-              name: "東薫酒造",
-              mapsUrl: "https://maps.app.goo.gl/2Ygq9aVvovxHBJLM9",
-              note: "創業 1804 年，代表銘柄「東薫」，可試飲",
-            },
-            {
-              icon: "🍶",
               name: "馬場本店酒造",
-              mapsUrl: "https://maps.app.goo.gl/yiHnZf9T7tSSxLjT7",
+              mapsUrl: "https://maps.app.goo.gl/tSuK16UuP5iYByhh7",
               note: "創業 1689 年，佐原現存最古老酒造，銘柄「大中将」",
             },
           ],
+        },
+
+        // 街上逛逛
+        {
+          time: "10:00",
+          type: "shopping",
+          title: "老街逛逛・買紀念品",
+          subtitle: "伴手禮、醬油、傳統小物",
+          notes: "佐原名產：在地醬油、味噌、手工藝品等，沿老街走走買買",
+        },
+
+        // 回飯店取行李
+        {
+          time: "10:30",
+          type: "luggage",
+          title: "回飯店取行李",
+          mapsQuery: "https://maps.app.goo.gl/rYRVDYtSEVyxL5pq7",
         },
 
         // 步行至佐原站
@@ -1111,9 +1124,8 @@ const TRIP = {
           type: "transport",
           transport: "walk",
           title: "步行至佐原駅",
-          subtitle: "老街沿河走回車站，約 15 分鐘",
+          subtitle: "徒步走回車站，約 15–20 分鐘",
           mapsQuery: "佐原駅",
-          notes: "沿小野川河畔步行，風景依然很美，順道最後回眸老街",
         },
 
         // 搭車前往機場
@@ -1163,8 +1175,7 @@ const TRIP = {
           type: "attraction",
           title: "機場報到＋貴賓室",
           subtitle: "成田機場第2航廈・中華航空櫃台",
-          mapsQuery: "成田空港第2旅客ターミナル",
-          notes: "建議起飛前 2 小時完成報到。若有貴賓卡可使用航廈內貴賓室，輕鬆等候登機",
+          notes: "建議起飛前 2 小時完成報到。商務艙應可使用貴賓室，好好享用貴賓室，輕鬆等候登機",
         },
 
         // 起飛
